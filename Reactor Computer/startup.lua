@@ -30,22 +30,14 @@ local reactor = peripheral.wrap("back")
 
 local power = 0
 local fuel = 0
-local currentPower = 0 -- protocol 1
-local maxPower = 0 -- protocol 2
-local percentPower = 0 -- protocol 3
-local reactorActive = false -- protocol 4
-local currentFuel = 0 -- protocol 5
-local percentWaste = 0 -- protocol 6
-local rfPerTick = 0 -- protocol 7
+local percentPower = 0 
+local reactorActive = false 
+local percentWaste = 0 
 
 function checkPower()
     fuel = reactor.getFuelStats()
     power = reactor.getEnergyStats()
     reactorActive = reactor.getActive()
-    currentPower = power["energyStored"]
-    maxPower = power["energyCapacity"]
-    rfPerTick = power["energyProducedLastTick"]
-    currentFuel = fuel["fuelAmount"]
 
     if power["energyStored"] ~= nil
     then 
@@ -63,11 +55,7 @@ function checkPower()
 end
 
 function powerControl()
-    if currentPower == nil
-    then reactor.setActive(false)
-    end
-    
-    if maxPower == nil
+    if percentPower == nil
     then reactor.setActive(false)
     end
 
